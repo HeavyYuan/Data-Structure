@@ -8,6 +8,9 @@
 
 int numPairsDivisibleBy60(int *array, int len);
 
+/*
+* from leetcode, and performance does not meet the requirement，the run time timeout
+*/
 int numPairsDivisibleBy60(int *array, int len)
 {
    int i,j,count;
