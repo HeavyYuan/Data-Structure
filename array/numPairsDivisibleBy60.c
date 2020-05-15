@@ -6,7 +6,62 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+typedef struct Data{
+    int len;
+    int array[0];
+}Data;
+
 int numPairsDivisibleBy60(int *array, int len);
+int numPairsDivisibleBy60Advance(int *array, int len);
+int numPairsDivisibleBy60Optimise(int *array, int len);
+
+#define MAX_MOD 500
+
+Data *mem_alloc(int len)
+{
+    int true_size;
+    Data *p = NULL;
+    true_size = sizeof(struct Data) + len;
+    p =  (Data *)malloc(true_size);
+    if(!p)
+        return(NULL);
+
+    return(p);
+}
+
+int rand_num(unsigned int seed)
+{
+    time_t t;
+    int num; 
+    //srand((unsigned)time(&t));
+    srand(seed);
+    num = rand() % MAX_MOD; 
+    return(num);
+
+}
+
+Data *dynamic_array(int len)
+{
+    int pos = 0;
+    int seed = 100000;
+
+    Data *data = mem_alloc(len);
+    if(!data)
+        return(NULL);
+
+    data->len = len;
+	while(pos < len){
+		int num = rand_num(seed);
+        data->array[pos] = num;
+        pos++;
+        seed++;
+	}
+
+    return(data);
+
+
+    
+}
 
 /*
 * from leetcode,when the lenth of #array is large, the performance does not meet the requirement that the run time timeout
@@ -65,12 +120,17 @@ int numPairsDivisibleBy60Advance(int *array, int len)
 	printf("%d\n",pairs);
 }
 
-int main()
+
+int main(int argc, char **argv)
 {
-	int array[ ] = {30,20,150,100,40,90,100,120,120};
-	int len = sizeof(array)/sizeof(int);
-	numPairsDivisibleBy60(array, len);
-	numPairsDivisibleBy60Advance(array, len);
+	if(argc != 2){
+		printf("usage: %s lenth_of_array\n",argv[0]);
+		exit(1);
+	}
+	int len = atoi(argv[1]);
+    Data *data = dynamic_array(len);
+	numPairsDivisibleBy60(data->array, data->len);
+	numPairsDivisibleBy60Advance(data->array, data->len);
 
 	exit(0);
 }
