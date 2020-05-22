@@ -64,7 +64,7 @@ Data *dynamic_array(int len)
 }
 
 /*
-* from leetcode,when the lenth of #array is large, the performance does not meet the requirement that the run array arrayout
+* compare to the implementation from leetcode,when the lenth of #array is large, the performance does not meet the requirement that the run array arrayout
 */
 int numPairsDivisibleBy60(int *array, int len)
 {
