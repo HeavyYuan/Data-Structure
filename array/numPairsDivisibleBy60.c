@@ -33,7 +33,7 @@ int rand_num(unsigned int seed)
 {
     time_t t;
     int num; 
-    //srand((unsigned)time(&t));
+    //srand((unsigned)array(&t));
     srand(seed);
     num = rand() % MAX_MOD; 
     return(num);
@@ -64,7 +64,7 @@ Data *dynamic_array(int len)
 }
 
 /*
-* from leetcode,when the lenth of #array is large, the performance does not meet the requirement that the run time timeout
+* from leetcode,when the lenth of #array is large, the performance does not meet the requirement that the run array arrayout
 */
 int numPairsDivisibleBy60(int *array, int len)
 {
@@ -120,6 +120,34 @@ int numPairsDivisibleBy60Advance(int *array, int len)
 	printf("%d\n",pairs);
 }
 
+/*
+ *from leetcode
+ *
+ * */
+int numPairsDivisibleBy60Optimise(int *array, int len)
+{
+    int count = 0;
+    int store[60] = {0};
+    int i;
+    for(i = 0;i < len;i++){
+        array[i] %= 60;
+        store[array[i]]++;
+    }
+
+    for(i = 0;i < len;i++){
+
+        store[array[i]]--;
+
+        if(array[i] == 0){
+            count += store[array[i]];
+        }
+        else{
+            count += store[60 - array[i]];
+        }
+    }
+    printf("%d\n",count);
+}
+
 
 int main(int argc, char **argv)
 {
@@ -131,6 +159,6 @@ int main(int argc, char **argv)
     Data *data = dynamic_array(len);
 	numPairsDivisibleBy60(data->array, data->len);
 	numPairsDivisibleBy60Advance(data->array, data->len);
-
+	numPairsDivisibleBy60Optimise(data->array, data->len);
 	exit(0);
 }
